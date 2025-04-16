@@ -58,7 +58,7 @@ export const isDraw1 = (gameBoard, currentCircle,currentPlayer) => {
     return (count === 0) && !isWinner(board, currentCircle,currentPlayer)
 }
 // the below function computes the random move
-export const  getComputerMove= (gameBoard) => {
+const  getRandomComputerMove= (gameBoard) => {
     // the following array will store indexes of available move
  let validMoves = [];
  for (let i=0; i < gameBoard.length; i++){
@@ -71,6 +71,66 @@ export const  getComputerMove= (gameBoard) => {
  return validMoves[rndMove]  
 }
 
-/*export const getComputerMove = (gameBoard) => {
+const getPosition = (gameBoard,moveChecks)=>{
+    for (let check=0; check < moveChecks.length; check++){
+        for (let i=0; i<moveChecks[check].max ;i+=moveChecks[check].step){
+         let series = gameBoard[i +moveChecks[check].indexes[0]].toString() +
+            gameBoard[i +moveChecks[check].indexes[1]].toString() +
+            gameBoard[i +moveChecks[check].indexes[2]].toString() +
+            gameBoard[i +moveChecks[check].indexes[3]].toString() 
+
+            switch(series){
+                case "1110":
+                case "2220":
+                    return i + moveChecks[check].indexes[3];
+                case "1101":
+                case "2202":
+                return i + moveChecks[check].indexes[2];   
+                case "1011":
+                case "2022":
+                return i + moveChecks[check].indexes[1];  
+                case "0111":
+                case "0222":
+                return i + moveChecks[check].indexes[0];  
+                default:
+         }
+
+        }
+    }
+    return -1
+}
+
+export const getComputerMove = (gameBoard) => {
     // vertical winning moves
-}*/
+    let moveChecks = [
+        // vertical winning moves max and step should be set here in a way that we can have four loops because we have 4 combinations that matches "indexes"
+        {
+            indexes : [0,4,8,12],
+            max : 4,
+            step: 1
+        },
+                // vertical winning moves; max and step should be set here in a way that we can have four loops because we have 4 combinations that matches "indexes"
+        {
+            indexes : [0,1,2,3],
+            max : 16,
+            step: 4
+        },
+        //diagonal1;max and step should be set here in a way that we only has a single loop because we only has one diagonal combination that matches "indexes"
+        {
+            indexes:[0,5,10,15],
+            max: 16,
+            step:16
+        }
+        ,
+        //diagonal2 ; max and step should be set here in a way that we only has a single loop because we only has one diagonal combination that matches "indexes"
+        {
+            indexes:[3,6,9,12],
+            max: 16,
+            step:16
+        }
+    ]
+    let position = getPosition(gameBoard,moveChecks)
+    if (position > -1 ) return position
+
+    return getRandomComputerMove(gameBoard)
+} 

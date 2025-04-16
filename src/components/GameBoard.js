@@ -17,7 +17,7 @@ import {PLAYER_1,
 // every text between two components tags (<Component> children </Component>) is consider as "children"; it is used to pass down stactic text to a component
 
 const GameBoard =() => {
-    const [gameBoard, setGameBoard] = useState(Array(16).fill(NO_PLAYER))
+    const [gameBoard, setGameBoard] = useState(Array(NUMBER_CIRCLES).fill(NO_PLAYER))
     const [currentPlayer, setCurrentPlayer] = useState(PLAYER_1)  // currentPlayer  in a sense, who's going to play next, especially for userFriendly perspectives
     const [gameState, setGameState ] = useState(GAME_STATE_PLAYING)  
     const [winPlayer, setWinPlayer]  = useState(NO_PLAYER)
@@ -34,7 +34,7 @@ const GameBoard =() => {
 
    const initGame = () => {
     console.log("init game")
-    setGameBoard(Array(16).fill(NO_PLAYER))
+    setGameBoard(Array(NUMBER_CIRCLES).fill(NO_PLAYER))
     setCurrentPlayer(PLAYER_1)
     setGameState(GAME_STATE_PLAYING)
    }
@@ -111,7 +111,7 @@ const GameBoard =() => {
             {initBoard()}
             
         </div> 
-        <Footer onNewGameClicked={initGame} onSuggestClicked={suggestMove} />
+        <Footer onNewGameClicked={initGame} onSuggestClicked={suggestMove} gamestate={gameState} />
         </>
     
     
